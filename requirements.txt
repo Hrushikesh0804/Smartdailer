@@ -1,0 +1,15 @@
+# Core
+sqlalchemy==2.0.36
+psycopg[binary]==3.2.3
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# Testing
+pytest==8.3.4
+pytest-timeout==2.3.1
+hypothesis==6.122.3
+httpx==0.28.1
+
+# Phase 8 Dashboard (unlocked for this phase only)
+fastapi==0.115.6
+uvicorn==0.34.0

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartDialer Live Operator Console</title>
+  <!-- Chart.js with fallback detection -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      padding: 16px;
+    }
+
+    /* Stale / Error Banner */
+    #staleBanner {
+      display: none;
+      background: var(--danger);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand h1 { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-predictive { background: rgba(34, 197, 94, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .badge-fallback { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-kill { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+    .badge-progressive { background: rgba(56, 189, 248, 0.2); color: var(--primary); border: 1px solid var(--primary); }
+
+    .top-metrics { display: flex; align-items: center; gap: 20px; }
+    .metric-group { display: flex; flex-direction: column; align-items: flex-end; }
+    .metric-group .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+    .metric-group .value { font-size: 1.15rem; font-weight: 700; }
+
+    /* Layout Grid */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-bottom: 16px; }
+    .col-12 { grid-column: span 12; }
+    .col-8 { grid-column: span 8; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    @media (max-width: 1024px) {
+      .col-8, .col-6, .col-4 { grid-column: span 12; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Stacked Agent State Bar */
+    .agent-bar {
+      display: flex;
+      height: 24px;
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      background: #0f172a;
+    }
+    .agent-bar-segment { transition: width 0.3s ease; height: 100%; }
+    .agent-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* Decision Rationale Card */
+    .decision-box {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+    .decision-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .decision-highlight { color: var(--primary); font-weight: 700; }
+
+    /* Tables */
+    .table-container { overflow-x: auto; max-height: 280px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
+    th { background: #0f172a; color: var(--text-muted); padding: 8px 10px; position: sticky; top: 0; }
+    td { padding: 8px 10px; border-bottom: 1px solid var(--card-border); }
+
+    /* Control Panel Drawer */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    button {
+      background: var(--card-border);
+      color: var(--text);
+      border: 1px solid #475569;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    button:hover { background: #475569; }
+    button.btn-danger { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); }
+    button.btn-danger:hover { background: var(--danger); color: white; }
+    button.btn-warning { background: rgba(245, 158, 11, 0.2); border-color: var(--warning); color: var(--warning); }
+    button.btn-warning:hover { background: var(--warning); color: black; }
+    button.btn-success { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); }
+    button.btn-success:hover { background: var(--success); color: white; }
+
+    .slider-container { display: flex; flex-direction: column; gap: 4px; }
+    input[type=range] { width: 100%; accent-color: var(--primary); }
+
+    .chart-container { position: relative; height: 220px; width: 100%; }
+  </style>
+</head>
+<body>
+
+  <!-- Stale / Offline Banner -->
+  <div id="staleBanner">⚠️ Connection Lost / Polling Error. Displaying cached state.</div>
+
+  <!-- Header & Status Bar -->
+  <header>
+    <div class="brand">
+      <h1>SmartDialer</h1>
+      <span id="modeBadge" class="badge badge-progressive">PROGRESSIVE</span>
+      <span id="invariantsBadge" class="badge badge-predictive">INVARIANTS: PASS</span>
+    </div>
+    <div class="top-metrics">
+      <div class="metric-group">
+        <span class="label">Agent Utilization</span>
+        <span id="utilizationVal" class="value">0.0%</span>
+      </div>
+      <div class="metric-group">
+        <span class="label">Abandonment Rate</span>
+        <span id="abandonRateVal" class="value">0.00%</span>
+      </div>
+      <div class="metric-group">
+        <span class="label">In-Flight Calls</span>
+        <span id="inflightVal" class="value">0</span>
+      </div>
+      <div class="metric-group">
+        <span class="label">Active Calls</span>
+        <span id="connectedVal" class="value">0</span>
+      </div>
+      <div class="metric-group">
+        <span class="label">Operator Token</span>
+        <button id="tokenBtn" onclick="promptToken()" style="padding: 4px 8px; font-size: 0.75rem;">Set Token</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Row 1: Agent States & In-Flight Calls -->
+  <div class="grid">
+    <div class="col-6 card">
+      <div class="card-title">
+        <span>Agent Pool Distribution</span>
+        <span id="totalOnlineAgents">Online: 0</span>
+      </div>
+      <div class="agent-bar">
+        <div id="segAvailable" class="agent-bar-segment" style="background: #22c55e; width: 0%;"></div>
+        <div id="segConnected" class="agent-bar-segment" style="background: #38bdf8; width: 0%;"></div>
+        <div id="segDialing" class="agent-bar-segment" style="background: #a855f7; width: 0%;"></div>
+        <div id="segReserved" class="agent-bar-segment" style="background: #f59e0b; width: 0%;"></div>
+        <div id="segWrapUp" class="agent-bar-segment" style="background: #eab308; width: 0%;"></div>
+        <div id="segPaused" class="agent-bar-segment" style="background: #64748b; width: 0%;"></div>
+      </div>
+      <div class="agent-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Available: <span id="cntAvailable">0</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#38bdf8"></div>Connected: <span id="cntConnected">0</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Dialing: <span id="cntDialing">0</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Reserved: <span id="cntReserved">0</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Wrap-Up: <span id="cntWrapUp">0</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>Offline: <span id="cntOffline">0</span></div>
+      </div>
+    </div>
+
+    <div class="col-6 card">
+      <div class="card-title">In-Flight Calls vs Safe Capacity</div>
+      <div class="chart-container">
+        <canvas id="inflightChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Bayesian Answer Rate & Abandonment Curve -->
+  <div class="grid">
+    <div class="col-6 card">
+      <div class="card-title">Beta-Bayesian Answer Rate (Mean vs Upper Bound $p_{hi}$)</div>
+      <div class="chart-container">
+        <canvas id="rateChart"></canvas>
+      </div>
+    </div>
+
+    <div class="col-6 card">
+      <div class="card-title">Rolling Abandonment Rate vs Regulatory Budget (3.0%)</div>
+      <div class="chart-container">
+        <canvas id="abandonChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Algorithmic Explainability ("Why this many calls?") & Decision Feed -->
+  <div class="grid">
+    <div class="col-4 card">
+      <div class="card-title">Why This Many Calls? (Latest Decision)</div>
+      <div class="decision-box">
+        <div class="decision-row"><span>Agent Capacity:</span><span id="decCapacity" class="decision-highlight">0</span></div>
+        <div class="decision-row"><span>In-Flight Active:</span><span id="decInflight">0</span></div>
+        <div class="decision-row"><span>Pessimistic Rate (p_hi):</span><span id="decPhi">0.00%</span></div>
+        <div class="decision-row"><span>Max Calls Allowed (N*):</span><span id="decNstar" class="decision-highlight">0</span></div>
+        <div class="decision-row"><span>Pacing Requested:</span><span id="decRequested">0</span></div>
+        <div class="decision-row" style="margin-top:8px; border-top:1px solid #334155; padding-top:6px;">
+          <span>Safety Verdict:</span><span id="decAction" class="decision-highlight">APPROVE</span>
+        </div>
+        <div class="decision-row"><span>Approved Calls:</span><span id="decApproved" class="decision-highlight">0</span></div>
+      </div>
+      <p id="decRationale" style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">Awaiting decision tick...</p>
+    </div>
+
+    <div class="col-8 card">
+      <div class="card-title">Recent Pacing & Safety Decision Feed</div>
+      <div class="table-container">
+        <table id="decisionsTable">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Capacity</th>
+              <th>In-Flight</th>
+              <th>p_hi</th>
+              <th>N*</th>
+              <th>Requested</th>
+              <th>Approved</th>
+              <th>Action</th>
+              <th>Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="9" style="text-align:center;">Loading decision feed...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: Provider Health, Events, and Sweeper Actions -->
+  <div class="grid">
+    <div class="col-4 card">
+      <div class="card-title">Telecom Carrier Health</div>
+      <div id="providerCards" style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:0.8rem;">Loading providers...</div>
+      </div>
+    </div>
+
+    <div class="col-4 card">
+      <div class="card-title">Event Inbox Breakdown</div>
+      <div style="font-size:0.85rem; display:flex; flex-direction:column; gap:6px;">
+        <div class="decision-row"><span>Applied (Monotonic):</span><strong id="evApplied">0</strong></div>
+        <div class="decision-row"><span>Ignored Duplicate:</span><strong id="evDup">0</strong></div>
+        <div class="decision-row"><span>Ignored Late (Terminal):</span><strong id="evLate">0</strong></div>
+        <div class="decision-row"><span>Quarantined (Retrying):</span><strong id="evQuarantine">0</strong></div>
+        <div class="decision-row"><span>Late Answer After Cancel:</span><strong id="evLateCancel" style="color:var(--warning)">0</strong></div>
+      </div>
+    </div>
+
+    <div class="col-4 card">
+      <div class="card-title">Recovery Sweeper</div>
+      <div style="font-size:0.8rem; color:var(--text-muted);" id="sweeperStatus">
+        Advisory lock acquired. Reclaiming expired leases and reconciling UNKNOWN carrier timeouts.
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 5: Operator Control Console -->
+  <div class="grid">
+    <div class="col-12 card">
+      <div class="card-title">Operator Live Control Console (Authorized Actions)</div>
+      <div class="controls-grid">
+        <button id="btnKill" class="btn-danger" onclick="toggleKillSwitch()">Toggle Kill Switch</button>
+        <button id="btnDrop40" class="btn-warning" onclick="dropAgents(40)">Drop 40 Agents (FSM)</button>
+        <button id="btnOutageA" onclick="toggleOutage('mock_a')">Trip Mock Provider A</button>
+        <button id="btnOutageB" onclick="toggleOutage('mock_b')">Trip Mock Provider B</button>
+        <button onclick="injectStorm('duplicate')">Inject Duplicate Storm</button>
+        <button onclick="injectStorm('out_of_order')">Inject Out-of-Order Storm</button>
+        <div class="slider-container">
+          <label style="font-size:0.75rem; color:var(--text-muted);">Simulated Answer Rate: <span id="lblRate">50%</span></label>
+          <input type="range" min="5" max="95" value="50" oninput="updateRateSlider(this.value)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let operatorToken = "secret-operator-token";
+    let killSwitchActive = false;
+    let outageA = false;
+    let outageB = false;
+
+    function promptToken() {
+      const val = prompt("Enter Operator Secret Token:", operatorToken);
+      if (val !== null) operatorToken = val;
+    }
+
+    // Chart.js instances
+    let inflightChart = null;
+    let rateChart = null;
+    let abandonChart = null;
+
+    function initCharts() {
+      if (typeof Chart === "undefined") {
+        console.warn("Chart.js failed to load from CDN. Using fallback display.");
+        return;
+      }
+
+      const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 300 },
+        scales: {
+          x: { display: false },
+          y: { grid: { color: "#334155" }, ticks: { color: "#94a3b8" } }
+        },
+        plugins: { legend: { labels: { color: "#f8fafc", boxWidth: 12 } } }
+      };
+
+      // 1. Inflight Chart
+      const ctx1 = document.getElementById("inflightChart")?.getContext("2d");
+      if (ctx1) {
+        inflightChart = new Chart(ctx1, {
+          type: "line",
+          data: {
+            labels: [],
+            datasets: [
+              { label: "In-Flight", data: [], borderColor: "#38bdf8", tension: 0.2 },
+              { label: "Capacity", data: [], borderColor: "#22c55e", tension: 0.2 },
+            ]
+          },
+          options: commonOptions
+        });
+      }
+
+      // 2. Answer Rate Chart
+      const ctx2 = document.getElementById("rateChart")?.getContext("2d");
+      if (ctx2) {
+        rateChart = new Chart(ctx2, {
+          type: "line",
+          data: {
+            labels: [],
+            datasets: [
+              { label: "p_hi (Upper Bound)", data: [], borderColor: "#f59e0b", tension: 0.2 },
+              { label: "p_mean", data: [], borderColor: "#38bdf8", tension: 0.2 },
+              { label: "Sim Truth", data: [], borderColor: "#ef4444", borderDash: [4, 4], tension: 0.2 }
+            ]
+          },
+          options: commonOptions
+        });
+      }
+
+      // 3. Abandonment Chart
+      const ctx3 = document.getElementById("abandonChart")?.getContext("2d");
+      if (ctx3) {
+        abandonChart = new Chart(ctx3, {
+          type: "line",
+          data: {
+            labels: [],
+            datasets: [
+              { label: "Abandonment Rate", data: [], borderColor: "#ef4444", tension: 0.2, fill: true, backgroundColor: "rgba(239,68,68,0.1)" },
+              { label: "Budget (3.0%)", data: [], borderColor: "#f59e0b", borderDash: [5, 5], pointRadius: 0 }
+            ]
+          },
+          options: commonOptions
+        });
+      }
+    }
+
+    async function pollDashboard() {
+      try {
+        const [resOverview, resTimeseries, resPacing, resSafety, resProviders, resEvents, resInvariants] = await Promise.all([
+          fetch("/api/overview"),
+          fetch("/api/timeseries?window=180"),
+          fetch("/api/pacing/decisions?limit=20"),
+          fetch("/api/safety/decisions?limit=20"),
+          fetch("/api/providers"),
+          fetch("/api/events"),
+          fetch("/api/invariants"),
+        ]);
+
+        if (!resOverview.ok) throw new Error("API error");
+
+        const overview = await resOverview.json();
+        const timeseries = await resTimeseries.json();
+        const pacing = await resPacing.json();
+        const safety = await resSafety.json();
+        const providers = await resProviders.json();
+        const events = await resEvents.json();
+        const invariants = await resInvariants.json();
+
+        document.getElementById("staleBanner").style.display = "none";
+        renderOverview(overview);
+        renderCharts(timeseries, overview.abandonment_budget);
+        renderDecisions(pacing, safety);
+        renderProviders(providers);
+        renderEvents(events);
+        renderInvariants(invariants);
+      } catch (err) {
+        console.error("Poll failure:", err);
+        document.getElementById("staleBanner").style.display = "block";
+      }
+    }
+
+    function renderOverview(data) {
+      // Badges
+      const modeBadge = document.getElementById("modeBadge");
+      modeBadge.textContent = data.mode;
+      modeBadge.className = "badge " + (
+        data.mode === "KILL_SWITCH" ? "badge-kill" :
+        data.mode === "FALLBACK_PROGRESSIVE" ? "badge-fallback" :
+        data.mode === "PREDICTIVE" ? "badge-predictive" : "badge-progressive"
+      );
+
+      killSwitchActive = data.kill_switch_active;
+      const killBtn = document.getElementById("btnKill");
+      killBtn.textContent = killSwitchActive ? "Kill Switch [ACTIVE: RESUME]" : "Trigger Kill Switch";
+      killBtn.className = killSwitchActive ? "btn-success" : "btn-danger";
+
+      document.getElementById("utilizationVal").textContent = data.utilization_pct + "%";
+      document.getElementById("abandonRateVal").textContent = (data.rolling_abandonment_rate * 100).toFixed(2) + "%";
+      document.getElementById("inflightVal").textContent = data.in_flight;
+      document.getElementById("connectedVal").textContent = data.connected;
+
+      // Agent distribution bar
+      const ag = data.agents || {};
+      const totOnline = data.online_agents || 1;
+      document.getElementById("totalOnlineAgents").textContent = `Online: ${totOnline} / Total: ${totOnline + (ag.OFFLINE || 0)}`;
+
+      document.getElementById("segAvailable").style.width = ((ag.AVAILABLE || 0) / totOnline * 100) + "%";
+      document.getElementById("segConnected").style.width = ((ag.CONNECTED || 0) / totOnline * 100) + "%";
+      document.getElementById("segDialing").style.width = ((ag.DIALING || 0) / totOnline * 100) + "%";
+      document.getElementById("segReserved").style.width = ((ag.RESERVED || 0) / totOnline * 100) + "%";
+      document.getElementById("segWrapUp").style.width = ((ag.WRAP_UP || 0) / totOnline * 100) + "%";
+      document.getElementById("segPaused").style.width = ((ag.PAUSED || 0) / totOnline * 100) + "%";
+
+      document.getElementById("cntAvailable").textContent = ag.AVAILABLE || 0;
+      document.getElementById("cntConnected").textContent = ag.CONNECTED || 0;
+      document.getElementById("cntDialing").textContent = ag.DIALING || 0;
+      document.getElementById("cntReserved").textContent = ag.RESERVED || 0;
+      document.getElementById("cntWrapUp").textContent = ag.WRAP_UP || 0;
+      document.getElementById("cntOffline").textContent = ag.OFFLINE || 0;
+    }
+
+    function renderCharts(ts, budget) {
+      if (!ts || !inflightChart) return;
+      const labels = ts.map(d => d.time.substring(14, 19));
+
+      // Inflight
+      inflightChart.data.labels = labels;
+      inflightChart.data.datasets[0].data = ts.map(d => d.in_flight);
+      inflightChart.data.datasets[1].data = ts.map(d => d.capacity);
+      inflightChart.update();
+
+      // Rates
+      rateChart.data.labels = labels;
+      rateChart.data.datasets[0].data = ts.map(d => (d.p_hi * 100).toFixed(1));
+      rateChart.data.datasets[1].data = ts.map(d => (d.p_mean * 100).toFixed(1));
+      rateChart.data.datasets[2].data = ts.map(d => d.sim_answer_rate ? (d.sim_answer_rate * 100).toFixed(1) : null);
+      rateChart.update();
+
+      // Abandonment
+      abandonChart.data.labels = labels;
+      abandonChart.data.datasets[0].data = ts.map(d => ((d.abandoned / Math.max(1, d.connected + d.abandoned)) * 100).toFixed(2));
+      abandonChart.data.datasets[1].data = ts.map(() => (budget * 100).toFixed(1));
+      abandonChart.update();
+    }
+
+    function renderDecisions(pacing, safety) {
+      if (pacing.length > 0) {
+        const latestP = pacing[0];
+        const latestS = safety.length > 0 ? safety[0] : {};
+
+        document.getElementById("decCapacity").textContent = latestP.capacity;
+        document.getElementById("decInflight").textContent = latestP.inflight;
+        document.getElementById("decPhi").textContent = (latestP.p_hi * 100).toFixed(1) + "%";
+        document.getElementById("decNstar").textContent = latestP.max_calls;
+        document.getElementById("decRequested").textContent = latestP.requested_calls;
+        document.getElementById("decAction").textContent = latestS.action || "APPROVE";
+        document.getElementById("decApproved").textContent = latestS.approved_calls !== undefined ? latestS.approved_calls : latestP.requested_calls;
+        document.getElementById("decRationale").textContent = latestP.why || latestP.formula || "";
+      }
+
+      // Render table
+      const tbody = document.querySelector("#decisionsTable tbody");
+      tbody.innerHTML = "";
+      for (let i = 0; i < Math.min(pacing.length, 20); i++) {
+        const p = pacing[i];
+        const s = safety[i] || {};
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${p.created_at.substring(11, 19)}</td>
+          <td>${p.capacity}</td>
+          <td>${p.inflight}</td>
+          <td>${(p.p_hi * 100).toFixed(1)}%</td>
+          <td>${p.max_calls}</td>
+          <td>${p.requested_calls}</td>
+          <td><strong>${s.approved_calls ?? p.requested_calls}</strong></td>
+          <td><span class="badge ${s.action === 'REJECT' ? 'badge-kill' : s.action === 'FALLBACK_PROGRESSIVE' ? 'badge-fallback' : 'badge-predictive'}">${s.action || 'APPROVE'}</span></td>
+          <td style="font-family:monospace; font-size:0.75rem;">${p.why || p.formula}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function renderProviders(provs) {
+      const container = document.getElementById("providerCards");
+      container.innerHTML = "";
+      for (const [name, p] of Object.entries(provs)) {
+        const isOpen = p.circuit_state === "OPEN";
+        const div = document.createElement("div");
+        div.className = "decision-box";
+        div.style.marginBottom = "4px";
+        div.innerHTML = `
+          <div class="decision-row">
+            <strong>${name.toUpperCase()}</strong>
+            <span class="badge ${isOpen ? 'badge-kill' : 'badge-predictive'}">${p.circuit_state}</span>
+          </div>
+          <div class="decision-row"><span>Failure Rate:</span><span>${(p.failure_rate * 100).toFixed(1)}%</span></div>
+          <div class="decision-row"><span>p50 Latency:</span><span>${p.latency_p50_ms || 50} ms</span></div>
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    function renderEvents(ev) {
+      const sc = ev.status_counts || {};
+      document.getElementById("evApplied").textContent = sc.APPLIED || 0;
+      document.getElementById("evDup").textContent = sc.IGNORED_DUPLICATE || 0;
+      document.getElementById("evLate").textContent = sc.IGNORED_LATE || 0;
+      document.getElementById("evQuarantine").textContent = sc.QUARANTINED || 0;
+      document.getElementById("evLateCancel").textContent = ev.late_answer_after_cancel || 0;
+    }
+
+    function renderInvariants(inv) {
+      const badge = document.getElementById("invariantsBadge");
+      if (inv.status === "PASSED") {
+        badge.textContent = "INVARIANTS: PASS";
+        badge.className = "badge badge-predictive";
+      } else {
+        badge.textContent = `INVARIANTS: FAIL (${inv.double_agent_count} double-agents)`;
+        badge.className = "badge badge-kill";
+      }
+    }
+
+    // ------------------------------------------------------------- //
+    // Control Actions (POST)                                         //
+    // ------------------------------------------------------------- //
+
+    async function sendControl(url, payload) {
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Operator-Token": operatorToken
+          },
+          body: JSON.stringify(payload)
+        });
+        if (res.status === 401 || res.status === 403) {
+          alert("Authorization failed: Invalid or missing X-Operator-Token");
+          promptToken();
+          return;
+        }
+        const data = await res.json();
+        console.log("Control success:", data);
+        pollDashboard();
+      } catch (e) {
+        alert("Control command failed: " + e.message);
+      }
+    }
+
+    function toggleKillSwitch() {
+      sendControl("/api/control/kill-switch", { on: !killSwitchActive });
+    }
+
+    function dropAgents(n) {
+      sendControl("/api/control/drop-agents", { count: n });
+    }
+
+    function toggleOutage(prov) {
+      if (prov === "mock_a") {
+        outageA = !outageA;
+        sendControl("/api/control/provider-outage", { provider: prov, on: outageA });
+        document.getElementById("btnOutageA").textContent = outageA ? "Restore Provider A" : "Trip Mock Provider A";
+      } else {
+        outageB = !outageB;
+        sendControl("/api/control/provider-outage", { provider: prov, on: outageB });
+        document.getElementById("btnOutageB").textContent = outageB ? "Restore Provider B" : "Trip Mock Provider B";
+      }
+    }
+
+    function updateRateSlider(val) {
+      const rate = val / 100.0;
+      document.getElementById("lblRate").textContent = val + "%";
+      sendControl("/api/control/answer-rate", { value: rate });
+    }
+
+    function injectStorm(kind) {
+      sendControl("/api/control/inject-events", { kind: kind });
+    }
+
+    // Initialize
+    window.addEventListener("DOMContentLoaded", () => {
+      initCharts();
+      pollDashboard();
+      setInterval(pollDashboard, 1000);
+    });
+  </script>
+</body>
+</html>

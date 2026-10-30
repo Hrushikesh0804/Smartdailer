@@ -1,0 +1,2 @@
+scenario,strategy,seed,agents,duration_s,utilization_pct,connected_pct,avg_idle_time_s,initiated,answered,connected,abandoned,abandonment_rate,max_in_flight,safety_actions,sweeper_actions,invariants,commit
+A,predictive_adaptive,42,100,120,12.54,5.33,7.9,343,20,7,0,0.00%,100,{'FALLBACK_PROGRESSIVE': 24},"{'expired_reserved': 0, 'reconciled_unknown': 6, 'stale_agent_released': 189}",PASSED,8808ff3

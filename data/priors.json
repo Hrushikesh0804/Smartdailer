@@ -1,0 +1,722 @@
+{
+  "CMP0000015": {
+    "alpha": 1.0,
+    "beta": 796.0,
+    "empirical_rate": 0.0,
+    "total_calls": 795
+  },
+  "CMP0000060": {
+    "alpha": 1.0,
+    "beta": 811.0,
+    "empirical_rate": 0.0,
+    "total_calls": 810
+  },
+  "CMP0000053": {
+    "alpha": 1.0,
+    "beta": 749.0,
+    "empirical_rate": 0.0,
+    "total_calls": 748
+  },
+  "CMP0000082": {
+    "alpha": 1.0,
+    "beta": 745.0,
+    "empirical_rate": 0.0,
+    "total_calls": 744
+  },
+  "CMP0000001": {
+    "alpha": 1.0,
+    "beta": 747.0,
+    "empirical_rate": 0.0,
+    "total_calls": 746
+  },
+  "CMP0000115": {
+    "alpha": 1.0,
+    "beta": 781.0,
+    "empirical_rate": 0.0,
+    "total_calls": 780
+  },
+  "CMP0000090": {
+    "alpha": 1.0,
+    "beta": 757.0,
+    "empirical_rate": 0.0,
+    "total_calls": 756
+  },
+  "CMP0000092": {
+    "alpha": 1.0,
+    "beta": 826.0,
+    "empirical_rate": 0.0,
+    "total_calls": 825
+  },
+  "CMP0000098": {
+    "alpha": 1.0,
+    "beta": 784.0,
+    "empirical_rate": 0.0,
+    "total_calls": 783
+  },
+  "CMP0000107": {
+    "alpha": 1.0,
+    "beta": 705.0,
+    "empirical_rate": 0.0,
+    "total_calls": 704
+  },
+  "CMP0000074": {
+    "alpha": 1.0,
+    "beta": 755.0,
+    "empirical_rate": 0.0,
+    "total_calls": 754
+  },
+  "CMP0000028": {
+    "alpha": 1.0,
+    "beta": 770.0,
+    "empirical_rate": 0.0,
+    "total_calls": 769
+  },
+  "CMP0000078": {
+    "alpha": 1.0,
+    "beta": 713.0,
+    "empirical_rate": 0.0,
+    "total_calls": 712
+  },
+  "CMP0000048": {
+    "alpha": 1.0,
+    "beta": 798.0,
+    "empirical_rate": 0.0,
+    "total_calls": 797
+  },
+  "CMP0000068": {
+    "alpha": 1.0,
+    "beta": 755.0,
+    "empirical_rate": 0.0,
+    "total_calls": 754
+  },
+  "CMP0000033": {
+    "alpha": 1.0,
+    "beta": 780.0,
+    "empirical_rate": 0.0,
+    "total_calls": 779
+  },
+  "CMP0000108": {
+    "alpha": 1.0,
+    "beta": 721.0,
+    "empirical_rate": 0.0,
+    "total_calls": 720
+  },
+  "CMP0000009": {
+    "alpha": 1.0,
+    "beta": 747.0,
+    "empirical_rate": 0.0,
+    "total_calls": 746
+  },
+  "CMP0000019": {
+    "alpha": 1.0,
+    "beta": 776.0,
+    "empirical_rate": 0.0,
+    "total_calls": 775
+  },
+  "CMP0000096": {
+    "alpha": 1.0,
+    "beta": 792.0,
+    "empirical_rate": 0.0,
+    "total_calls": 791
+  },
+  "CMP0000076": {
+    "alpha": 1.0,
+    "beta": 742.0,
+    "empirical_rate": 0.0,
+    "total_calls": 741
+  },
+  "CMP0000050": {
+    "alpha": 1.0,
+    "beta": 748.0,
+    "empirical_rate": 0.0,
+    "total_calls": 747
+  },
+  "CMP0000104": {
+    "alpha": 1.0,
+    "beta": 776.0,
+    "empirical_rate": 0.0,
+    "total_calls": 775
+  },
+  "CMP0000017": {
+    "alpha": 1.0,
+    "beta": 710.0,
+    "empirical_rate": 0.0,
+    "total_calls": 709
+  },
+  "CMP0000006": {
+    "alpha": 1.0,
+    "beta": 755.0,
+    "empirical_rate": 0.0,
+    "total_calls": 754
+  },
+  "CMP0000055": {
+    "alpha": 1.0,
+    "beta": 769.0,
+    "empirical_rate": 0.0,
+    "total_calls": 768
+  },
+  "CMP0000089": {
+    "alpha": 1.0,
+    "beta": 766.0,
+    "empirical_rate": 0.0,
+    "total_calls": 765
+  },
+  "CMP0000046": {
+    "alpha": 1.0,
+    "beta": 798.0,
+    "empirical_rate": 0.0,
+    "total_calls": 797
+  },
+  "CMP0000035": {
+    "alpha": 1.0,
+    "beta": 790.0,
+    "empirical_rate": 0.0,
+    "total_calls": 789
+  },
+  "CMP0000109": {
+    "alpha": 1.0,
+    "beta": 752.0,
+    "empirical_rate": 0.0,
+    "total_calls": 751
+  },
+  "CMP0000010": {
+    "alpha": 1.0,
+    "beta": 741.0,
+    "empirical_rate": 0.0,
+    "total_calls": 740
+  },
+  "CMP0000051": {
+    "alpha": 1.0,
+    "beta": 733.0,
+    "empirical_rate": 0.0,
+    "total_calls": 732
+  },
+  "CMP0000062": {
+    "alpha": 1.0,
+    "beta": 746.0,
+    "empirical_rate": 0.0,
+    "total_calls": 745
+  },
+  "CMP0000007": {
+    "alpha": 1.0,
+    "beta": 729.0,
+    "empirical_rate": 0.0,
+    "total_calls": 728
+  },
+  "CMP0000011": {
+    "alpha": 1.0,
+    "beta": 719.0,
+    "empirical_rate": 0.0,
+    "total_calls": 718
+  },
+  "CMP0000095": {
+    "alpha": 1.0,
+    "beta": 770.0,
+    "empirical_rate": 0.0,
+    "total_calls": 769
+  },
+  "CMP0000099": {
+    "alpha": 1.0,
+    "beta": 744.0,
+    "empirical_rate": 0.0,
+    "total_calls": 743
+  },
+  "CMP0000014": {
+    "alpha": 1.0,
+    "beta": 799.0,
+    "empirical_rate": 0.0,
+    "total_calls": 798
+  },
+  "CMP0000072": {
+    "alpha": 1.0,
+    "beta": 795.0,
+    "empirical_rate": 0.0,
+    "total_calls": 794
+  },
+  "CMP0000020": {
+    "alpha": 1.0,
+    "beta": 734.0,
+    "empirical_rate": 0.0,
+    "total_calls": 733
+  },
+  "CMP0000031": {
+    "alpha": 1.0,
+    "beta": 789.0,
+    "empirical_rate": 0.0,
+    "total_calls": 788
+  },
+  "CMP0000008": {
+    "alpha": 1.0,
+    "beta": 754.0,
+    "empirical_rate": 0.0,
+    "total_calls": 753
+  },
+  "CMP0000114": {
+    "alpha": 1.0,
+    "beta": 836.0,
+    "empirical_rate": 0.0,
+    "total_calls": 835
+  },
+  "CMP0000087": {
+    "alpha": 1.0,
+    "beta": 740.0,
+    "empirical_rate": 0.0,
+    "total_calls": 739
+  },
+  "CMP0000116": {
+    "alpha": 1.0,
+    "beta": 826.0,
+    "empirical_rate": 0.0,
+    "total_calls": 825
+  },
+  "CMP0000111": {
+    "alpha": 1.0,
+    "beta": 757.0,
+    "empirical_rate": 0.0,
+    "total_calls": 756
+  },
+  "CMP0000002": {
+    "alpha": 1.0,
+    "beta": 768.0,
+    "empirical_rate": 0.0,
+    "total_calls": 767
+  },
+  "CMP0000091": {
+    "alpha": 1.0,
+    "beta": 752.0,
+    "empirical_rate": 0.0,
+    "total_calls": 751
+  },
+  "CMP0000086": {
+    "alpha": 1.0,
+    "beta": 798.0,
+    "empirical_rate": 0.0,
+    "total_calls": 797
+  },
+  "CMP0000052": {
+    "alpha": 1.0,
+    "beta": 764.0,
+    "empirical_rate": 0.0,
+    "total_calls": 763
+  },
+  "CMP0000102": {
+    "alpha": 1.0,
+    "beta": 741.0,
+    "empirical_rate": 0.0,
+    "total_calls": 740
+  },
+  "CMP0000058": {
+    "alpha": 1.0,
+    "beta": 803.0,
+    "empirical_rate": 0.0,
+    "total_calls": 802
+  },
+  "CMP0000056": {
+    "alpha": 1.0,
+    "beta": 756.0,
+    "empirical_rate": 0.0,
+    "total_calls": 755
+  },
+  "CMP0000061": {
+    "alpha": 1.0,
+    "beta": 772.0,
+    "empirical_rate": 0.0,
+    "total_calls": 771
+  },
+  "CMP0000119": {
+    "alpha": 1.0,
+    "beta": 771.0,
+    "empirical_rate": 0.0,
+    "total_calls": 770
+  },
+  "CMP0000070": {
+    "alpha": 1.0,
+    "beta": 781.0,
+    "empirical_rate": 0.0,
+    "total_calls": 780
+  },
+  "CMP0000101": {
+    "alpha": 1.0,
+    "beta": 756.0,
+    "empirical_rate": 0.0,
+    "total_calls": 755
+  },
+  "CMP0000013": {
+    "alpha": 1.0,
+    "beta": 774.0,
+    "empirical_rate": 0.0,
+    "total_calls": 773
+  },
+  "CMP0000021": {
+    "alpha": 1.0,
+    "beta": 745.0,
+    "empirical_rate": 0.0,
+    "total_calls": 744
+  },
+  "CMP0000063": {
+    "alpha": 1.0,
+    "beta": 747.0,
+    "empirical_rate": 0.0,
+    "total_calls": 746
+  },
+  "CMP0000045": {
+    "alpha": 1.0,
+    "beta": 765.0,
+    "empirical_rate": 0.0,
+    "total_calls": 764
+  },
+  "CMP0000073": {
+    "alpha": 1.0,
+    "beta": 739.0,
+    "empirical_rate": 0.0,
+    "total_calls": 738
+  },
+  "CMP0000022": {
+    "alpha": 1.0,
+    "beta": 773.0,
+    "empirical_rate": 0.0,
+    "total_calls": 772
+  },
+  "CMP0000012": {
+    "alpha": 1.0,
+    "beta": 753.0,
+    "empirical_rate": 0.0,
+    "total_calls": 752
+  },
+  "CMP0000044": {
+    "alpha": 1.0,
+    "beta": 745.0,
+    "empirical_rate": 0.0,
+    "total_calls": 744
+  },
+  "CMP0000081": {
+    "alpha": 1.0,
+    "beta": 773.0,
+    "empirical_rate": 0.0,
+    "total_calls": 772
+  },
+  "CMP0000003": {
+    "alpha": 1.0,
+    "beta": 744.0,
+    "empirical_rate": 0.0,
+    "total_calls": 743
+  },
+  "CMP0000064": {
+    "alpha": 1.0,
+    "beta": 776.0,
+    "empirical_rate": 0.0,
+    "total_calls": 775
+  },
+  "CMP0000036": {
+    "alpha": 1.0,
+    "beta": 807.0,
+    "empirical_rate": 0.0,
+    "total_calls": 806
+  },
+  "CMP0000049": {
+    "alpha": 1.0,
+    "beta": 788.0,
+    "empirical_rate": 0.0,
+    "total_calls": 787
+  },
+  "CMP0000018": {
+    "alpha": 1.0,
+    "beta": 748.0,
+    "empirical_rate": 0.0,
+    "total_calls": 747
+  },
+  "CMP0000113": {
+    "alpha": 1.0,
+    "beta": 722.0,
+    "empirical_rate": 0.0,
+    "total_calls": 721
+  },
+  "CMP0000110": {
+    "alpha": 1.0,
+    "beta": 754.0,
+    "empirical_rate": 0.0,
+    "total_calls": 753
+  },
+  "CMP0000105": {
+    "alpha": 1.0,
+    "beta": 760.0,
+    "empirical_rate": 0.0,
+    "total_calls": 759
+  },
+  "CMP0000067": {
+    "alpha": 1.0,
+    "beta": 744.0,
+    "empirical_rate": 0.0,
+    "total_calls": 743
+  },
+  "CMP0000117": {
+    "alpha": 1.0,
+    "beta": 767.0,
+    "empirical_rate": 0.0,
+    "total_calls": 766
+  },
+  "CMP0000112": {
+    "alpha": 1.0,
+    "beta": 793.0,
+    "empirical_rate": 0.0,
+    "total_calls": 792
+  },
+  "CMP0000069": {
+    "alpha": 1.0,
+    "beta": 752.0,
+    "empirical_rate": 0.0,
+    "total_calls": 751
+  },
+  "CMP0000038": {
+    "alpha": 1.0,
+    "beta": 770.0,
+    "empirical_rate": 0.0,
+    "total_calls": 769
+  },
+  "CMP0000084": {
+    "alpha": 1.0,
+    "beta": 760.0,
+    "empirical_rate": 0.0,
+    "total_calls": 759
+  },
+  "CMP0000120": {
+    "alpha": 1.0,
+    "beta": 715.0,
+    "empirical_rate": 0.0,
+    "total_calls": 714
+  },
+  "CMP0000071": {
+    "alpha": 1.0,
+    "beta": 725.0,
+    "empirical_rate": 0.0,
+    "total_calls": 724
+  },
+  "CMP0000042": {
+    "alpha": 1.0,
+    "beta": 737.0,
+    "empirical_rate": 0.0,
+    "total_calls": 736
+  },
+  "CMP0000029": {
+    "alpha": 1.0,
+    "beta": 765.0,
+    "empirical_rate": 0.0,
+    "total_calls": 764
+  },
+  "CMP0000040": {
+    "alpha": 1.0,
+    "beta": 779.0,
+    "empirical_rate": 0.0,
+    "total_calls": 778
+  },
+  "CMP0000066": {
+    "alpha": 1.0,
+    "beta": 740.0,
+    "empirical_rate": 0.0,
+    "total_calls": 739
+  },
+  "CMP0000077": {
+    "alpha": 1.0,
+    "beta": 738.0,
+    "empirical_rate": 0.0,
+    "total_calls": 737
+  },
+  "CMP0000004": {
+    "alpha": 1.0,
+    "beta": 751.0,
+    "empirical_rate": 0.0,
+    "total_calls": 750
+  },
+  "CMP0000083": {
+    "alpha": 1.0,
+    "beta": 791.0,
+    "empirical_rate": 0.0,
+    "total_calls": 790
+  },
+  "CMP0000025": {
+    "alpha": 1.0,
+    "beta": 736.0,
+    "empirical_rate": 0.0,
+    "total_calls": 735
+  },
+  "CMP0000027": {
+    "alpha": 1.0,
+    "beta": 772.0,
+    "empirical_rate": 0.0,
+    "total_calls": 771
+  },
+  "CMP0000080": {
+    "alpha": 1.0,
+    "beta": 772.0,
+    "empirical_rate": 0.0,
+    "total_calls": 771
+  },
+  "CMP0000093": {
+    "alpha": 1.0,
+    "beta": 757.0,
+    "empirical_rate": 0.0,
+    "total_calls": 756
+  },
+  "CMP0000032": {
+    "alpha": 1.0,
+    "beta": 724.0,
+    "empirical_rate": 0.0,
+    "total_calls": 723
+  },
+  "CMP0000100": {
+    "alpha": 1.0,
+    "beta": 809.0,
+    "empirical_rate": 0.0,
+    "total_calls": 808
+  },
+  "CMP0000041": {
+    "alpha": 1.0,
+    "beta": 793.0,
+    "empirical_rate": 0.0,
+    "total_calls": 792
+  },
+  "CMP0000079": {
+    "alpha": 1.0,
+    "beta": 815.0,
+    "empirical_rate": 0.0,
+    "total_calls": 814
+  },
+  "CMP0000065": {
+    "alpha": 1.0,
+    "beta": 783.0,
+    "empirical_rate": 0.0,
+    "total_calls": 782
+  },
+  "CMP0000024": {
+    "alpha": 1.0,
+    "beta": 759.0,
+    "empirical_rate": 0.0,
+    "total_calls": 758
+  },
+  "CMP0000039": {
+    "alpha": 1.0,
+    "beta": 742.0,
+    "empirical_rate": 0.0,
+    "total_calls": 741
+  },
+  "CMP0000075": {
+    "alpha": 1.0,
+    "beta": 749.0,
+    "empirical_rate": 0.0,
+    "total_calls": 748
+  },
+  "CMP0000057": {
+    "alpha": 1.0,
+    "beta": 766.0,
+    "empirical_rate": 0.0,
+    "total_calls": 765
+  },
+  "CMP0000037": {
+    "alpha": 1.0,
+    "beta": 726.0,
+    "empirical_rate": 0.0,
+    "total_calls": 725
+  },
+  "CMP0000118": {
+    "alpha": 1.0,
+    "beta": 745.0,
+    "empirical_rate": 0.0,
+    "total_calls": 744
+  },
+  "CMP0000026": {
+    "alpha": 1.0,
+    "beta": 756.0,
+    "empirical_rate": 0.0,
+    "total_calls": 755
+  },
+  "CMP0000054": {
+    "alpha": 1.0,
+    "beta": 769.0,
+    "empirical_rate": 0.0,
+    "total_calls": 768
+  },
+  "CMP0000088": {
+    "alpha": 1.0,
+    "beta": 714.0,
+    "empirical_rate": 0.0,
+    "total_calls": 713
+  },
+  "CMP0000023": {
+    "alpha": 1.0,
+    "beta": 729.0,
+    "empirical_rate": 0.0,
+    "total_calls": 728
+  },
+  "CMP0000085": {
+    "alpha": 1.0,
+    "beta": 752.0,
+    "empirical_rate": 0.0,
+    "total_calls": 751
+  },
+  "CMP0000043": {
+    "alpha": 1.0,
+    "beta": 735.0,
+    "empirical_rate": 0.0,
+    "total_calls": 734
+  },
+  "CMP0000059": {
+    "alpha": 1.0,
+    "beta": 769.0,
+    "empirical_rate": 0.0,
+    "total_calls": 768
+  },
+  "CMP0000034": {
+    "alpha": 1.0,
+    "beta": 781.0,
+    "empirical_rate": 0.0,
+    "total_calls": 780
+  },
+  "CMP0000016": {
+    "alpha": 1.0,
+    "beta": 754.0,
+    "empirical_rate": 0.0,
+    "total_calls": 753
+  },
+  "CMP0000106": {
+    "alpha": 1.0,
+    "beta": 793.0,
+    "empirical_rate": 0.0,
+    "total_calls": 792
+  },
+  "CMP0000030": {
+    "alpha": 1.0,
+    "beta": 770.0,
+    "empirical_rate": 0.0,
+    "total_calls": 769
+  },
+  "CMP0000103": {
+    "alpha": 1.0,
+    "beta": 803.0,
+    "empirical_rate": 0.0,
+    "total_calls": 802
+  },
+  "CMP0000094": {
+    "alpha": 1.0,
+    "beta": 755.0,
+    "empirical_rate": 0.0,
+    "total_calls": 754
+  },
+  "CMP0000047": {
+    "alpha": 1.0,
+    "beta": 781.0,
+    "empirical_rate": 0.0,
+    "total_calls": 780
+  },
+  "CMP0000005": {
+    "alpha": 1.0,
+    "beta": 778.0,
+    "empirical_rate": 0.0,
+    "total_calls": 777
+  },
+  "CMP0000097": {
+    "alpha": 1.0,
+    "beta": 755.0,
+    "empirical_rate": 0.0,
+    "total_calls": 754
+  }
+}

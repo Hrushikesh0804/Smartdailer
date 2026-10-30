@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+timeout = 60
+testpaths = ["tests"]
+# Show extra test summary info for failures and errors
+addopts = "-v -ra"
